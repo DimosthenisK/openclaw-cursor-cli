@@ -82,6 +82,11 @@
         ],
         "description": "Forwarded to cursor-agent's --sandbox flag. 'enabled' confines tool actions to a sandbox (recommended for untrusted workspaces). 'disabled' opts out. Omit to inherit cursor-agent's own config."
       },
+      "autoRefreshRules": {
+        "type": "boolean",
+        "default": true,
+        "description": "When true (default), rebuild model-rules.json from the live `cursor-agent models` catalog at startup when the cache is missing, malformed, or older than 7 days. Without a rules file, thinking-level translation cannot map a catalog family id to a real Cursor model id, and cursor-agent rejects the request with 'Cannot use this model'."
+      },
       "extraArgs": {
         "type": "array",
         "items": {
