@@ -4,18 +4,32 @@
   "description": "Use the local `cursor-agent` binary (Cursor subscription) as an OpenClaw model backend. Fork of @jeehou/openclaw-cursor-cli with the provider-to-runtime binding, multi-turn resume, startup activation, synthetic auth, and model-rule cache fixes.",
   "activation": {
     "onStartup": true,
-    "onProviders": ["cursor-cli"]
+    "onProviders": [
+      "cursor-cli"
+    ]
   },
   "enabledByDefault": false,
-  "providers": ["cursor-cli"],
+  "providers": [
+    "cursor-cli"
+  ],
   "modelSupport": {
-    "modelPrefixes": ["cursor-cli/"]
+    "modelPrefixes": [
+      "cursor-cli/"
+    ]
   },
-  "cliBackends": ["cursor-cli"],
-  "syntheticAuthRefs": ["cursor-cli"],
-  "nonSecretAuthMarkers": ["openclaw:cursor-cli-native-auth"],
+  "cliBackends": [
+    "cursor-cli"
+  ],
+  "syntheticAuthRefs": [
+    "cursor-cli"
+  ],
+  "nonSecretAuthMarkers": [
+    "openclaw:cursor-cli-native-auth"
+  ],
   "configContracts": {
-    "compatibilityMigrationPaths": ["models.providers.cursor-cli"]
+    "compatibilityMigrationPaths": [
+      "models.providers.cursor-cli"
+    ]
   },
   "commandAliases": [
     {
@@ -49,7 +63,11 @@
       },
       "mode": {
         "type": "string",
-        "enum": ["agent", "plan", "ask"],
+        "enum": [
+          "agent",
+          "plan",
+          "ask"
+        ],
         "description": "Execution mode for cursor-agent. Pick the lowest privilege you need. 'plan' = read-only/planning (recommended when you only want a model provider, no file edits). 'ask' = pure Q&A, no tool use. 'agent' = full coding agent capable of writes/shell. Omit to inherit the legacy headless behavior."
       },
       "allowTools": {
@@ -58,17 +76,17 @@
       },
       "sandbox": {
         "type": "string",
-        "enum": ["enabled", "disabled"],
+        "enum": [
+          "enabled",
+          "disabled"
+        ],
         "description": "Forwarded to cursor-agent's --sandbox flag. 'enabled' confines tool actions to a sandbox (recommended for untrusted workspaces). 'disabled' opts out. Omit to inherit cursor-agent's own config."
-      },
-      "autoRefreshRules": {
-        "type": "boolean",
-        "default": true,
-        "description": "When true (default), the plugin rebuilds model-rules.json from the live `cursor-agent models` catalog at startup if the cache is missing or older than 7 days. Without a rules file, thinking-level translation cannot map a catalog family id to a real Cursor model id, and cursor-agent rejects the request with 'Cannot use this model'."
       },
       "extraArgs": {
         "type": "array",
-        "items": { "type": "string" },
+        "items": {
+          "type": "string"
+        },
         "default": [],
         "description": "Extra args appended to every cursor-agent invocation (advanced — most users do not need this)."
       }

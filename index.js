@@ -286,7 +286,6 @@ function rulesCacheNeedsRefresh() {
 async function ensureRulesCacheFresh(pluginConfig, { force = false } = {}) {
   if (startupRulesRefreshDone && !force) return;
   startupRulesRefreshDone = true;
-  if (!force && pluginConfig?.autoRefreshRules === false) return;
   const reason = rulesCacheNeedsRefresh();
   if (!reason) return;
   const command = sanitizeCommand(pluginConfig?.command);
