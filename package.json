@@ -1,0 +1,60 @@
+{
+  "name": "@dimosthenisk/openclaw-cursor-cli",
+  "version": "0.0.7",
+  "description": "OpenClaw plugin: route model calls through the local `cursor-agent` binary (Cursor subscription). Fork of @jeehou/openclaw-cursor-cli fixing the provider-to-runtime binding, multi-turn resume, startup activation, synthetic auth, and the missing model-rules cache.",
+  "type": "module",
+  "main": "./index.js",
+  "license": "MIT",
+  "author": "DimosthenisK",
+  "contributors": [
+    "jeehou (original author)"
+  ],
+  "homepage": "https://github.com/DimosthenisK/openclaw-cursor-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DimosthenisK/openclaw-cursor-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DimosthenisK/openclaw-cursor-cli/issues"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "cursor",
+    "cursor-agent",
+    "cli-backend",
+    "ai",
+    "llm",
+    "model-provider"
+  ],
+  "files": [
+    "index.js",
+    "setup-api.mjs",
+    "openclaw.plugin.json",
+    "src/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.5.0"
+    },
+    "build": {
+      "openclawVersion": "2026.11.6"
+    },
+    "release": {
+      "publishToClawHub": false,
+      "publishToNpm": false
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "openclaw": "2026.11.6"
+  }
+}

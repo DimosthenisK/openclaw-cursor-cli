@@ -1,0 +1,77 @@
+{
+  "id": "cursor-cli",
+  "name": "Cursor CLI",
+  "description": "Use the local `cursor-agent` binary (Cursor subscription) as an OpenClaw model backend. Fork of @jeehou/openclaw-cursor-cli with the provider-to-runtime binding, multi-turn resume, startup activation, synthetic auth, and model-rule cache fixes.",
+  "activation": {
+    "onStartup": true,
+    "onProviders": ["cursor-cli"]
+  },
+  "enabledByDefault": false,
+  "providers": ["cursor-cli"],
+  "modelSupport": {
+    "modelPrefixes": ["cursor-cli/"]
+  },
+  "cliBackends": ["cursor-cli"],
+  "syntheticAuthRefs": ["cursor-cli"],
+  "nonSecretAuthMarkers": ["openclaw:cursor-cli-native-auth"],
+  "configContracts": {
+    "compatibilityMigrationPaths": ["models.providers.cursor-cli"]
+  },
+  "commandAliases": [
+    {
+      "name": "cursor-models",
+      "kind": "runtime-slash"
+    }
+  ],
+  "providerAuthEnvVars": {
+    "cursor-cli": []
+  },
+  "providerAuthChoices": [
+    {
+      "provider": "cursor-cli",
+      "method": "cli",
+      "choiceId": "cursor-cli",
+      "choiceLabel": "Cursor Agent CLI",
+      "choiceHint": "Reuse a local `cursor-agent login` on this host (Cursor subscription).",
+      "assistantPriority": 0,
+      "groupId": "cursor-cli",
+      "groupLabel": "Cursor",
+      "groupHint": "Cursor subscription via cursor-agent CLI"
+    }
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "command": {
+        "type": "string",
+        "description": "Path or name of the cursor-agent binary. Must be an absolute path or a simple binary name (default: cursor-agent). Shell metachars are rejected."
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["agent", "plan", "ask"],
+        "description": "Execution mode for cursor-agent. Pick the lowest privilege you need. 'plan' = read-only/planning (recommended when you only want a model provider, no file edits). 'ask' = pure Q&A, no tool use. 'agent' = full coding agent capable of writes/shell. Omit to inherit the legacy headless behavior."
+      },
+      "allowTools": {
+        "type": "boolean",
+        "description": "Controls whether cursor-agent may run its write/shell tools non-interactively. Set false (recommended for untrusted workspaces, and the right choice when using this plugin purely as a text-model provider) to make every tool action require explicit approval. Pairs naturally with mode:\"plan\" or mode:\"ask\"."
+      },
+      "sandbox": {
+        "type": "string",
+        "enum": ["enabled", "disabled"],
+        "description": "Forwarded to cursor-agent's --sandbox flag. 'enabled' confines tool actions to a sandbox (recommended for untrusted workspaces). 'disabled' opts out. Omit to inherit cursor-agent's own config."
+      },
+      "autoRefreshRules": {
+        "type": "boolean",
+        "default": true,
+        "description": "When true (default), the plugin rebuilds model-rules.json from the live `cursor-agent models` catalog at startup if the cache is missing or older than 7 days. Without a rules file, thinking-level translation cannot map a catalog family id to a real Cursor model id, and cursor-agent rejects the request with 'Cannot use this model'."
+      },
+      "extraArgs": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": [],
+        "description": "Extra args appended to every cursor-agent invocation (advanced — most users do not need this)."
+      }
+    }
+  }
+}
