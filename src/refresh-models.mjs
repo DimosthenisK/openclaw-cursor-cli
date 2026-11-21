@@ -312,6 +312,13 @@ export function buildPluginPayload(models) {
     providerConfig: {
       baseUrl: "cli://cursor-agent",
       api: "openai-completions",
+      // Non-secret marker declared by openclaw.plugin.json (nonSecretAuthMarkers +
+      // syntheticAuthRefs). Cursor authenticates through its own local
+      // `cursor-agent login`, so there is no real API key. Without this marker the
+      // Control UI and the model catalog classify every cursor-cli model as
+      // unavailable ("0 of N models available") even when the CLI is logged in.
+      // It is not a secret and must survive every refresh.
+      apiKey: "openclaw:cursor-cli-native-auth",
       models: catalogModels,
     },
     rules: {
